@@ -9,7 +9,7 @@ author: Kae
 # multiple category is not supported
 category: Flutter
 # multiple tag entries are possible
-tags: [flutter, pretice, programming]
+tags: [flutter, practice, programming]
 # thumbnail image for post
 img: ":Flutter.jpeg"
 # disable comments on this page
