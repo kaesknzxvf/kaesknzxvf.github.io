@@ -116,7 +116,7 @@ home: HomePage(),
 ```
 로 변경
 
-![Flutter Simple chat UI 실행 화면 01](:2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_01.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 01](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_01.png){:width="30%" height="30%"}
 
 ## 메인 화면: 하단바 추가
 
@@ -155,7 +155,7 @@ return Scaffold(
   원문에는 `BottomNavigationBarItem` 에 타이틀 속성으로 텍스트를 입력하고 있는데, 버전 1.22 이후에는 title 대신 label 속성을 쓰도록 바뀌었다  
   [Bottom Navigation Title To Label](https://docs.flutter.dev/release/breaking-changes/bottom-navigation-title-to-label)
 
-  ![Flutter Simple chat UI 실행 화면 02](:2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_02.png){:width="30%" height="30%"}
+  ![Flutter Simple chat UI 실행 화면 02](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_02.png){:width="30%" height="30%"}
 
 ## Chatpage : 대화 목록 화면 구현
 
@@ -205,7 +205,7 @@ import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
 ```
 로 변경
 
-![Flutter Simple chat UI 실행 화면 03](:2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_03.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 03](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_03.png){:width="30%" height="30%"}
 
 변한건 별로 없어 보이지만, chat이라고 텍스트만 쓰여져 있던 화면이 아닌, 새로운 레이어로 덮혀진 상태라는 걸 알 수 있다.
 
@@ -273,7 +273,7 @@ import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
   SingleChildScrollView 의 모든 하위 항목은 수직으로 표시함
 
 
-![Flutter Simple chat UI 실행 화면 04](:2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_04.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 04](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_04.png){:width="30%" height="30%"}
 
 ### 검색창을 만들어주자
 Column 위젯의 내용을 변경 children:SafeArea(), 다음에
@@ -303,7 +303,7 @@ Padding(
 
 여기까지의 화면 
 
-![Flutter Simple chat UI 실행 화면 05](:2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_05.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 05](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_05.png){:width="30%" height="30%"}
 
 
 ### 대화 목록을 만들어 주자
@@ -450,7 +450,7 @@ ListView.builder(
 그리고 핫 로드를 하면 이런 화면이 된다
 
 
-![Flutter Simple chat UI 실행 화면 06](:2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_06.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 06](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_06.png){:width="30%" height="30%"}
 
 
 ## 채팅 세부 정보 화면 구현
