@@ -1,22 +1,34 @@
 ---
 # multilingual page pair id, this must pair with translations of this page. (This name must be unique)
-lng_pair: "id_study_flutter"
-title: "Flutter 01 Simple Chat UI"
+#lng_pair: "id_study_flutter"
+title: "Flutter 01 Simple Chat UI 01 Chat화면"
 
 # post specific
-# if not specified, .name will be used from _data/owner/[language].yml
-author: Kae
-# multiple category is not supported
-category: Flutter
-# multiple tag entries are possible
+author: kae
+# publish date
+date: 2022-07-10 13:10:06 +0900
+category: [Flutter, Simple Chat]
 tags: [flutter, practice, programming]
-# thumbnail image for post
-img: ":Flutter.jpeg"
+
 # disable comments on this page
 #comments_disable: true
 
-# publish date
-date: 2022-07-10 13:10:06 +0900
+# thumbnail image for post
+# img: ":Flutter.jpeg"
+
+# data path
+img_path: /assets/img/2022-07-10-Flutter-Simple-Chat-UI-01/
+# image:
+  # path: /assets/img/2022-07-10-Flutter-Simple-Chat-UI-01/
+  # width: 1000   # in pixels
+  # height: 400   # in pixels
+  # alt: image alternative text
+
+# if pinned Posts
+# pin: true
+
+########################################################################
+
 # seo
 # if not specified, date will be used.
 #meta_modify_date: 2022-02-10 08:11:06 +0900
@@ -34,11 +46,11 @@ date: 2022-07-10 13:10:06 +0900
 #search_engine_exclude: true
 # to disable this page, simply set published: false or delete this file
 #published: false
+
 ---
 
 <!-- outline-start -->
 
-Flutter 가보자고
 
 <!-- outline-end -->
 
@@ -49,7 +61,7 @@ Flutter 가보자고
 을 따라서 작성한 Flutter Simple Chat UI 에 관한 내용이다.
 
 ***
-## 환경
+# 환경
 
 - MacBook Air (M1, 2020)
 - macOS Monterey (v12.4)
@@ -61,7 +73,7 @@ Flutter 가보자고
 
 ***
 
-## 메인 화면 생성
+# 메인 화면 생성
 
 
 `/lib/main.dart` 파일 내용을
@@ -87,6 +99,8 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+{: file="lib/main.dart" }
+
 로 변경
 
 `lib`폴더에 `screen`폴더를 추가 `homePage.dart` 파일을 생성
@@ -108,25 +122,50 @@ class HomePage extends StatelessWidget{
   }
 }
 ```
+{: file="lib/screen/homePage.dart" }
+
 을 입력
 
-`/lib/main.dart` 의 `home: Container(),` 을
-```
-home: HomePage(),
-```
-로 변경
+`/lib/main.dart` 에 좀전에 만든 파일을 임포트 해준 후,
 
-![Flutter Simple chat UI 실행 화면 01](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_01.png){:width="30%" height="30%"}
+```dart
+import 'package:flt_20220703_simple_chatapp/screen/homePage.dart';
+```
+{: file="lib/main.dart" }
+코드 중 `home: Container(),` 을 `home: HomePage(),` 로 변경
 
-## 메인 화면: 하단바 추가
+여기까의 `/lib/main.dart` 의 전체 코드
+```dart
+import 'package:flutter/material.dart';
+import 'package:flt_20220703_simple_chatapp/screen/homePage.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
+  }
+}
+```
+{: file="lib/main.dart" }
+
+![Flutter Simple chat UI 실행 화면 01](SimulSc_chat_01.png){:width="30%" height="30%"}
+
+# 메인 화면: 하단바 추가
 
 `/lib/screen/homePage.dart` 파일의 `Scaffold` 클래스의 내용을 변경해주자
 
 ```dart
-return Scaffold(
-      body: Container(
-        child: Center(child: Text("Chat")),
-      ),
+    return Scaffold(
+      body: ChatPage(),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.grey.shade600,
@@ -149,15 +188,15 @@ return Scaffold(
         ],
       ),
     );
-  }
-  ```
+```
+{: file="lib/screen/homePage.dart" }
 
-  원문에는 `BottomNavigationBarItem` 에 타이틀 속성으로 텍스트를 입력하고 있는데, 버전 1.22 이후에는 title 대신 label 속성을 쓰도록 바뀌었다  
-  [Bottom Navigation Title To Label](https://docs.flutter.dev/release/breaking-changes/bottom-navigation-title-to-label)
+> 원문에는 `BottomNavigationBarItem` 에 title 키로 텍스트를 입력하고 있는데, [버전 1.22 이후에는 title 대신 label 키를 쓰도록 바뀌었다](https://docs.flutter.dev/release/breaking-changes/bottom-navigation-title-to-label)
+{: .prompt-info}
 
-  ![Flutter Simple chat UI 실행 화면 02](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_02.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 02](SimulSc_chat_02.png){:width="30%" height="30%"}
 
-## Chatpage : 대화 목록 화면 구현
+# Chatpage : 대화 목록 화면 구현
 
 
 `lib/screen`폴더에 `chatPage.dart` 파일을 생성
@@ -183,6 +222,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 }
 ```
+{: file="lib/screen/chatPage.dart" }
 을 입력
 
 `/lib/screen/homePage.dart` 파일에
@@ -190,6 +230,7 @@ class _ChatPageState extends State<ChatPage> {
 ```dart
 import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
 ```
+{: file="lib/screen/homePage.dart" }
 임포트 해주고
 
 ```dart
@@ -198,18 +239,20 @@ import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
         child: Center(child: Text("Chat")),
       ),
 ```
+{: file="lib/screen/homePage.dart" }
 를
 ```dart
     return Scaffold(
       body: ChatPage(),
 ```
+{: file="lib/screen/homePage.dart" }
 로 변경
 
-![Flutter Simple chat UI 실행 화면 03](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_03.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 03](SimulSc_chat_03.png){:width="30%" height="30%"}
 
 변한건 별로 없어 보이지만, chat이라고 텍스트만 쓰여져 있던 화면이 아닌, 새로운 레이어로 덮혀진 상태라는 걸 알 수 있다.
 
-### 헤더를 만들어주자
+## 헤더를 만들어주자
 이제부터 본격적으로 chat page ui를 만들어 주는 작업
 
 `/lib/screen/chatPage.dart` 파일에 `_ChatPageState` 클래스 `build`위젯 내용을 수정해서 대화 목록을 표시할 것임
@@ -221,6 +264,7 @@ import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
       ),
     );
 ```
+{: file="lib/screen/chatPage.dart" }
 을
 
 ```dart
@@ -261,6 +305,7 @@ import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
       ),
     );
 ```
+{: file="lib/screen/chatPage.dart" }
 로 수정
 
 - body: SingleChildScrollView  
@@ -273,9 +318,9 @@ import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
   SingleChildScrollView 의 모든 하위 항목은 수직으로 표시함
 
 
-![Flutter Simple chat UI 실행 화면 04](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_04.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 04](SimulSc_chat_04.png){:width="30%" height="30%"}
 
-### 검색창을 만들어주자
+## 검색창을 만들어주자
 Column 위젯의 내용을 변경 children:SafeArea(), 다음에
 
 ```dart
@@ -299,14 +344,15 @@ Padding(
   ),
 ),
 ```
+{: file="lib/screen/chatPage.dart" }
 를 추가
 
 여기까지의 화면 
 
-![Flutter Simple chat UI 실행 화면 05](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_05.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 05](SimulSc_chat_05.png){:width="30%" height="30%"}
 
 
-### 대화 목록을 만들어 주자
+## 대화 목록을 만들어 주자
 
 대화 목록의 인스턴스를 저장하는 클래스(객체) 모델을 먼저 만들어야 함  
 `./lib` 폴더에 `./models` 라는 폴더를 생성  
@@ -324,12 +370,12 @@ class ChatUsers{
   ChatUsers({required this.name,required this.messageText,required this.imageURL,required this.time});
 }
 ```
+{: file="lib/models/chatUsersModel.dart" }
 와 같이 ChatUsers 라는 클래스를 작성  
 ChatUsers 객체에는 사용자 이름, 텍스트 메세지, 이미지 URL, 시간이 저장됨
 
-원문에는 변수 들 앞에 반드시 값이 필요하다는 의미로 `@required` 선언을 하고 있는데, null safty 문제로 `requried` 쓰도록 바뀌었다
-
-[How does @required compare to the new required keyword?](https://dart.dev/null-safety/faq#how-does-required-compare-to-the-new-required-keyword)
+> 원문에는 변수 들 앞에 반드시 값이 필요하다는 의미로 `@required` 선언을 하고 있는데, [null safty 문제로 `requried` 를 쓰도록 바뀌었다](https://dart.dev/null-safety/faq#how-does-required-compare-to-the-new-required-keyword)
+{: .prompt-info}
 
 
 
@@ -338,6 +384,7 @@ ChatUsers 객체에는 사용자 이름, 텍스트 메세지, 이미지 URL, 시
 ```dart
 import 'package:flt_20220703_simple_chatapp/models/chatUsersModel.dart';
 ```
+{: file="lib/screen/chatPage.dart" }
 해주고, 방금 만든 클래스를 이용해 사용자 목록을 만들어 주자
 
 ```dart
@@ -352,8 +399,9 @@ List<ChatUsers> chatUsers = [
     ChatUsers(name: "John Wick", messageText: "How are you?", imageURL: "images/userImage8.jpeg", time: "18 Feb"),
   ];
 ```
+{: file="lib/screen/chatPage.dart" }
 
-### 개별 대화를 위한 개별 클래스 위젯을 만들자
+## 개별 대화를 위한 개별 클래스 위젯을 만들자
 
 `./lib` 폴더에 `./widgets` 라는 폴더를 생성  
 `./models` 안에 `conversationList.dart` 라는 파일을 생성
@@ -415,6 +463,7 @@ class _ConversationListState extends State<ConversationList> {
   }
 }
 ```
+{: file="lib/models/conversationList.dart" }
 추가
 
 여기서는 chatUsersModel.dart 에 만든 객체의 변수 + 메세지 유형을 표시 할 bool 값을 파라미터로 사용하고, 그 값이 포함된 템플릿을 반환함
@@ -425,6 +474,7 @@ class _ConversationListState extends State<ConversationList> {
 ```dart
 import 'package:flt_20220703_simple_chatapp/widgets/conversationList.dart';
 ```
+{: file="lib/screen/chatPage.dart" }
 Column 위젯의 내용을 변경 children:SafeArea(), Padding(), 다음에
 
 ```dart
@@ -443,21 +493,19 @@ ListView.builder(
     );
   },
 ),
-
 ```
+{: file="lib/screen/chatPage.dart" }
 를 추가해 주자 
 
 그리고 핫 로드를 하면 이런 화면이 된다
 
 
-![Flutter Simple chat UI 실행 화면 06](/assets/img/2022-07-10-Flutter-Simple-Chat-UI/SimulSc_chat_06.png){:width="30%" height="30%"}
+![Flutter Simple chat UI 실행 화면 06](SimulSc_chat_06.png){:width="30%" height="30%"}
 
-
-## 채팅 세부 정보 화면 구현
-
-
+<!-- ## 채팅 세부 정보 화면 구현 -->
 
 ***
 ## 후기
 
-호냐라라
+dart ... 처음 접하지만 라뗴언어와 요즘언어의 짬뽕같은 느낌이라 둘 다 어설프게 아는 나는 오히려 받아들이기 쉬운 것 같기도 하다...   
+다음은 채팅 세부 화면을 구현하는 내용!
