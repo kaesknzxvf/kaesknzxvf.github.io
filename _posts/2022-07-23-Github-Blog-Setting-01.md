@@ -273,6 +273,8 @@ author: <author_id>
 ---
 ```
 
+> `<xxxxxxx>` 의 내용은 본인의 정보를 입력
+
 사실 이런 세팅을 해주지 않아도 'By저자'는 `_config.yml` 파일에 세팅한 
 
 ```yaml
@@ -280,6 +282,8 @@ social:
   name: <your_name>
 ```
 {: file="_config.yml" }
+
+> `<xxxxxxx>` 의 내용은 본인의 정보를 입력
 
 의 정보를 가져와서 자동으로 입력이 되지만,  `_data/authors.yml` 에서 세팅한 내용으로 재정의를 해주면 twitter 계정 정보가 추가 되어서 검색이 되기 쉽고, 입력해준 url이 하이퍼 링크로 들어가서 저자를 클릭했을 때 내가 원하는 페이지로 연결해 줄 수 있다. 
 

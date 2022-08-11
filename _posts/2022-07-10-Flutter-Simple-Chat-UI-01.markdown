@@ -60,6 +60,10 @@ img_path: /assets/img/2022-07-10-Flutter-Simple-Chat-UI-01/
 
 을 따라서 작성한 Flutter Simple Chat UI 에 관한 내용이다.
 
+관련 포스트
+- Base, Chat 화면 구현 (현재 포스트)
+- [Chat Detail 화면 구현](https://kaesknzxvf.github.io/posts/Flutter-Simple-Chat-UI-02/)
+
 ***
 # 환경
 
@@ -99,7 +103,7 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
-{: file="lib/main.dart" }
+{: file="/lib/main.dart" }
 
 로 변경
 
@@ -122,7 +126,7 @@ class HomePage extends StatelessWidget{
   }
 }
 ```
-{: file="lib/screen/homePage.dart" }
+{: file="/lib/screen/homePage.dart" }
 
 을 입력
 
@@ -131,7 +135,7 @@ class HomePage extends StatelessWidget{
 ```dart
 import 'package:flt_20220703_simple_chatapp/screen/homePage.dart';
 ```
-{: file="lib/main.dart" }
+{: file="/lib/main.dart" }
 코드 중 `home: Container(),` 을 `home: HomePage(),` 로 변경
 
 여기까의 `/lib/main.dart` 의 전체 코드
@@ -155,7 +159,7 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
-{: file="lib/main.dart" }
+{: file="/lib/main.dart" }
 
 ![Flutter Simple chat UI 실행 화면 01](SimulSc_chat_01.png){:width="30%" height="30%"}
 
@@ -189,7 +193,7 @@ class MyApp extends StatelessWidget {
       ),
     );
 ```
-{: file="lib/screen/homePage.dart" }
+{: file="/lib/screen/homePage.dart" }
 
 > 원문에는 `BottomNavigationBarItem` 에 title 키로 텍스트를 입력하고 있는데, [버전 1.22 이후에는 title 대신 label 키를 쓰도록 바뀌었다](https://docs.flutter.dev/release/breaking-changes/bottom-navigation-title-to-label)
 {: .prompt-info}
@@ -222,7 +226,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 }
 ```
-{: file="lib/screen/chatPage.dart" }
+{: file="/ib/screen/chatPage.dart" }
 을 입력
 
 `/lib/screen/homePage.dart` 파일에
@@ -230,7 +234,7 @@ class _ChatPageState extends State<ChatPage> {
 ```dart
 import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
 ```
-{: file="lib/screen/homePage.dart" }
+{: file="/lib/screen/homePage.dart" }
 임포트 해주고
 
 ```dart
@@ -239,13 +243,13 @@ import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
         child: Center(child: Text("Chat")),
       ),
 ```
-{: file="lib/screen/homePage.dart" }
+{: file="/lib/screen/homePage.dart" }
 를
 ```dart
     return Scaffold(
       body: ChatPage(),
 ```
-{: file="lib/screen/homePage.dart" }
+{: file="/lib/screen/homePage.dart" }
 로 변경
 
 ![Flutter Simple chat UI 실행 화면 03](SimulSc_chat_03.png){:width="30%" height="30%"}
@@ -264,7 +268,7 @@ import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
       ),
     );
 ```
-{: file="lib/screen/chatPage.dart" }
+{: file="/lib/screen/chatPage.dart" }
 을
 
 ```dart
@@ -305,7 +309,7 @@ import 'package:flt_20220703_simple_chatapp/screen/chatPage.dart';
       ),
     );
 ```
-{: file="lib/screen/chatPage.dart" }
+{: file="/lib/screen/chatPage.dart" }
 로 수정
 
 - body: SingleChildScrollView  
@@ -344,7 +348,7 @@ Padding(
   ),
 ),
 ```
-{: file="lib/screen/chatPage.dart" }
+{: file="/lib/screen/chatPage.dart" }
 를 추가
 
 여기까지의 화면 
@@ -370,11 +374,11 @@ class ChatUsers{
   ChatUsers({required this.name,required this.messageText,required this.imageURL,required this.time});
 }
 ```
-{: file="lib/models/chatUsersModel.dart" }
+{: file="/lib/models/chatUsersModel.dart" }
 와 같이 ChatUsers 라는 클래스를 작성  
 ChatUsers 객체에는 사용자 이름, 텍스트 메세지, 이미지 URL, 시간이 저장됨
 
-> 원문에는 변수 들 앞에 반드시 값이 필요하다는 의미로 `@required` 선언을 하고 있는데, [null safty 문제로 `requried` 를 쓰도록 바뀌었다](https://dart.dev/null-safety/faq#how-does-required-compare-to-the-new-required-keyword)
+> 원문에는 변수들 앞에 반드시 값이 필요하다는 의미로 `@required` 선언을 하고 있는데, [null safty 문제로 `requried` 를 쓰도록 바뀌었다](https://dart.dev/null-safety/faq#how-does-required-compare-to-the-new-required-keyword)
 {: .prompt-info}
 
 
@@ -384,22 +388,25 @@ ChatUsers 객체에는 사용자 이름, 텍스트 메세지, 이미지 URL, 시
 ```dart
 import 'package:flt_20220703_simple_chatapp/models/chatUsersModel.dart';
 ```
-{: file="lib/screen/chatPage.dart" }
+{: file="/lib/screen/chatPage.dart" }
 해주고, 방금 만든 클래스를 이용해 사용자 목록을 만들어 주자
 
 ```dart
 List<ChatUsers> chatUsers = [
-    ChatUsers(name: "Jane Russel", messageText: "Awesome Setup", imageURL: "images/userImage1.jpeg", time: "Now"),
-    ChatUsers(name: "Glady's Murphy", messageText: "That's Great", imageURL: "images/userImage2.jpeg", time: "Yesterday"),
-    ChatUsers(name: "Jorge Henry", messageText: "Hey where are you?", imageURL: "images/userImage3.jpeg", time: "31 Mar"),
-    ChatUsers(name: "Philip Fox", messageText: "Busy! Call me in 20 mins", imageURL: "images/userImage4.jpeg", time: "28 Mar"),
-    ChatUsers(name: "Debra Hawkins", messageText: "Thankyou, It's awesome", imageURL: "images/userImage5.jpeg", time: "23 Mar"),
-    ChatUsers(name: "Jacob Pena", messageText: "will update you in evening", imageURL: "images/userImage6.jpeg", time: "17 Mar"),
-    ChatUsers(name: "Andrey Jones", messageText: "Can you please share the file?", imageURL: "images/userImage7.jpeg", time: "24 Feb"),
-    ChatUsers(name: "John Wick", messageText: "How are you?", imageURL: "images/userImage8.jpeg", time: "18 Feb"),
+    ChatUsers(name: "Jane Russel", messageText: "Awesome Setup", imageURL: "https://randomuser.me/api/portraits/men/1.jpg", time: "Now"),
+    ChatUsers(name: "Glady's Murphy", messageText: "That's Great", imageURL: "https://randomuser.me/api/portraits/women/1.jpg", time: "Yesterday"),
+    ChatUsers(name: "Jorge Henry", messageText: "Hey where are you?", imageURL: "https://randomuser.me/api/portraits/men/2.jpg", time: "31 Mar"),
+    ChatUsers(name: "Philip Fox", messageText: "Busy! Call me in 20 mins", imageURL: "https://randomuser.me/api/portraits/women/2.jpg", time: "28 Mar"),
+    ChatUsers(name: "Debra Hawkins", messageText: "Thankyou, It's awesome", imageURL: "https://randomuser.me/api/portraits/men/3.jpg", time: "23 Mar"),
+    ChatUsers(name: "Jacob Pena", messageText: "will update you in evening", imageURL: "https://randomuser.me/api/portraits/women/3.jpg", time: "17 Mar"),
+    ChatUsers(name: "Andrey Jones", messageText: "Can you please share the file?", imageURL: "https://randomuser.me/api/portraits/men/4.jpg", time: "24 Feb"),
+    ChatUsers(name: "John Wick", messageText: "How are you?", imageURL: "https://randomuser.me/api/portraits/women/4.jpg", time: "18 Feb"),
   ];
 ```
-{: file="lib/screen/chatPage.dart" }
+{: file="/lib/screen/chatPage.dart" }
+
+> 원문에는 각각의 `imageURL` 에 로컬 이미지 파일 패스를 입력해 줬는데, 나는 따로 저장해 놓은 파일이 없어서 인터넷 URL 로 수정
+{: .prompt-info}
 
 ## 개별 대화를 위한 개별 클래스 위젯을 만들자
 
@@ -463,7 +470,7 @@ class _ConversationListState extends State<ConversationList> {
   }
 }
 ```
-{: file="lib/models/conversationList.dart" }
+{: file="/lib/models/conversationList.dart" }
 추가
 
 여기서는 chatUsersModel.dart 에 만든 객체의 변수 + 메세지 유형을 표시 할 bool 값을 파라미터로 사용하고, 그 값이 포함된 템플릿을 반환함
@@ -474,7 +481,7 @@ class _ConversationListState extends State<ConversationList> {
 ```dart
 import 'package:flt_20220703_simple_chatapp/widgets/conversationList.dart';
 ```
-{: file="lib/screen/chatPage.dart" }
+{: file="/lib/screen/chatPage.dart" }
 Column 위젯의 내용을 변경 children:SafeArea(), Padding(), 다음에
 
 ```dart
@@ -494,7 +501,7 @@ ListView.builder(
   },
 ),
 ```
-{: file="lib/screen/chatPage.dart" }
+{: file="/lib/screen/chatPage.dart" }
 를 추가해 주자 
 
 그리고 핫 로드를 하면 이런 화면이 된다
@@ -505,7 +512,7 @@ ListView.builder(
 <!-- ## 채팅 세부 정보 화면 구현 -->
 
 ***
-## 후기
+# 후기
 
 dart ... 처음 접하지만 라떼언어와 요즘언어의 짬뽕같은 느낌이라 둘 다 어설프게 아는 나는 오히려 받아들이기 쉬운 것 같기도 하다   
 다음은 채팅 세부 화면을 구현하는 내용!
