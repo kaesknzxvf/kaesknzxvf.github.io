@@ -378,7 +378,7 @@ class ChatUsers{
 와 같이 ChatUsers 라는 클래스를 작성  
 ChatUsers 객체에는 사용자 이름, 텍스트 메세지, 이미지 URL, 시간이 저장됨
 
-> 원문에는 변수들 앞에 반드시 값이 필요하다는 의미로 `@required` 선언을 하고 있는데, [null safty 문제로 `requried` 를 쓰도록 바뀌었다](https://dart.dev/null-safety/faq#how-does-required-compare-to-the-new-required-keyword)
+> 원문에는 입력 받아야할 파라메터들 앞에 반드시 값이 필요하다는 의미로 `@required` 어노테이션(Annotation)을 사용을 하고 있는데, Flutter 2.0 부터는 [null safty 문제로 `requried` 를 쓰도록 바뀌었다.](https://dart.dev/null-safety/faq#how-does-required-compare-to-the-new-required-keyword) `requried`을 사용하면 필수 파라메터가 들어오지 않았을 때, 빌드 시 에러를 내보낼 수 있다.
 {: .prompt-info}
 
 

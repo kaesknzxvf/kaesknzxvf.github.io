@@ -189,18 +189,6 @@ import 'package:flt_20220703_simple_chatapp/screen/chatDetailPage.dart';
 
 ![Flutter Simple chat UI 실행 화면 chatdetail 02](SimulSc_chatdetail_02.png){:width="30%" height="30%"}
 
-
-## 헤더 : UI에 값 전달
-
-지금은 어떤 리스트의 개체를 선택해도 전 단계에서 만든 고정 값의 같은 화면이 실행될 뿐이지만, 내가 선택한 대화 상대의 정보가 뜨게 만들어 주고 싶다.
-즉, 내가 리스트 중에서 어떤 개체를 선택하였는지, Detail 화면에 전달할 필요가 있다.
-
-아무래도 원문의 예제는 단순히 UI만 다루는 포스트이다 보니, 실제로 값을 전달하는 작업은 해주지 않는다. 그러므로 이번 소챕터는 내가 추가한 코드이다.
-
-참고한 페이지
-- [새로운 화면으로 데이터 보내기](https://flutter-ko.dev/docs/cookbook/navigation/passing-data)
-
-
 ## 바텀 : 텍스트 박스 추가
 
 이제 하단에 메세지를 입력할 수 있는 텍스트 박스와 송신 버튼, 이미지 등을 추가하기 위한 버튼을 배치해 주자.  
@@ -279,7 +267,7 @@ class ChatMessage{
 ```
 {: file="/lib/models/chatMessageModel.dart" }
 
-> 여기서도 `ChatMessage` 클래스와 [같은이유](https://dart.dev/null-safety/faq#how-does-required-compare-to-the-new-required-keyword)로, 원문과 같은 `@required` 가 아닌 `requried` 로 대체해 주자 
+> 여기서도 `ChatMessage` 클래스와 [같은이유](https://dart.dev/null-safety/faq#how-does-required-compare-to-the-new-required-keyword)로, 원문과 같은 `@required` 어노테이션(Annotation)이 아닌 `requried` 로 대체해 주자 
 {: .prompt-info}
 
 다시 `chatDetailPage.dart` 파일로 돌아와서 표시될 메세지 리스트를 만들어 준다. 지금은 하드코딩(ㅋㅋ)을 해주지만 나중에는 수신된 메세지 리스트를 받아오면 될 것이다.
@@ -369,4 +357,4 @@ import 'package:flt_20220703_simple_chatapp/models/chatMessageModel.dart';
 작성자가 [Flutter chat app](https://instaflutter.com/app-templates/flutter-chat-app/) 이라는 페이지를 소개하고 있는데 이런 채팅 앱의 템플릿을 판매하는 사이트니 참고할 사람은 참고하시길.
 
 개별 스크린 설계, 클릭 이벤트 같은 기본적인 UI 구현을 익히기 좋은 예제 같다.  
-이 예제를 통해 만든 UI를 기반드로 화면 간의 값 전달, 실제로 메세지를 주고 받을 수 있는 소켓 프로그래밍을 하면 결과가 눈에 보이면서 재밌을 것 같으니, 해보도록 하겠다.
+이 예제를 통해 만든 UI를 기반으로 화면 간의 값 전달이나 실제로 메세지를 주고 받을 수 있는 소켓 프로그래밍을 하면 결과가 눈에 보이면서 재밌을 것 같으니 해보도록 하겠다.
