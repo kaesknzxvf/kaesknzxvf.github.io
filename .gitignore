@@ -20,3 +20,7 @@ node_modules
 package-lock.json
 
 Gemfile.lock
+
+#post
+!2022-07-22-Github-Blog-Start-01.markdown
+!2022-07-23-Github-Blog-Setting-02.md
