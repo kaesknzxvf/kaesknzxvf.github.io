@@ -63,6 +63,7 @@ img_path: /assets/img/2022-07-10-Flutter-Simple-Chat-UI-01/
 관련 포스트
 - Base, Chat 화면 구현 (현재 포스트)
 - [Chat Detail 화면 구현](https://kaesknzxvf.github.io/posts/Flutter-Simple-Chat-UI-02/)
+- [응용 01 (Chat Detail 화면) 화면 간 데이터 전달, 메세지 입력](https://kaesknzxvf.github.io/posts/Flutter-Simple-Chat-UI-EX01/)
 
 ***
 # 환경

@@ -58,17 +58,19 @@ img_path: /assets/img/2022-08-12-Flutter-Simple-Chat-UI-EX01/
 
 - [How to Build a Chat App UI With Flutter and Dart](https://www.freecodecamp.org/news/build-a-chat-app-ui-with-flutter/)
 
-을 따라서 작성한 Flutter Simple Chat UI 을 이용하여 
+을 따라서 작성한 Flutter Simple Chat UI 을 응용하여 좀 더 그럴듯한 채팅앱을 구현하기 위한 과정을 다룬다.
+
+주요 내용은 이하와 같다.
 - 화면 간의 데이터 전달 
 - 메세지 입력
-을 구현한 내용이다.
+- 메세지 입력에 따른 Chat Detail 화면의 디테일한 UI 수정
 
 원문의 예제는 단순히 UI만 다루는 포스트이다 보니, 실제로 데이터를 전달하거나 저장하는 등 데이터를 처리하는 작업은 해주지 않는다. 그러므로 이번 포스트부터는 스스로 공부하며 추가한 코드이다.
 
 관련 포스트
 - [Base, Chat 화면 구현](https://kaesknzxvf.github.io/posts/Flutter-Simple-Chat-UI-01/)
 - [Chat Detail 화면 구현](https://kaesknzxvf.github.io/posts/Flutter-Simple-Chat-UI-02/)
-- 응용 01 화면 간 데이터 전달, 메세지 입력 (현재포스트)
+- 응용 01 (Chat Detail 화면) 화면 간 데이터 전달, 메세지 입력 (현재포스트)
 
 ***
 # 환경
@@ -83,7 +85,7 @@ img_path: /assets/img/2022-08-12-Flutter-Simple-Chat-UI-EX01/
 
 ***
 
-# Chat Detail <-> Chat 화면에 데이터 전달
+# Chat 화면 -> Chat Detail 화면에 데이터 전달
 ## Chat Detail 헤더 UI에 값 전달
 ![Flutter Simple chat UI ex 01](SimulSc_ex_01.png){:width="30%" height="30%"}
 
@@ -183,7 +185,7 @@ class ChatDetailPage extends StatefulWidget {
                   width: 2,
                 ),
                 CircleAvatar(
-                  backgroundImage: NetworkImage(widget.cpimageurl), //변경
+                  backgroundImage: NetworkImage(widget.cpimageurl), //수정
                   maxRadius: 20,
                 ),
                 SizedBox(
@@ -195,7 +197,7 @@ class ChatDetailPage extends StatefulWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        widget.cpname, //변경
+                        widget.cpname, //수정
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600),
                       ),
@@ -222,11 +224,9 @@ class ChatDetailPage extends StatefulWidget {
 ```
 {: file="/lib/screen/ChatDetailPage.dart" }
 
-결과물을 확인해 보면, 이렇게 클릭한 사람의 이미지와 이름이 뜨는 것을 볼 수 있다.
+결과물을 확인해 보면, 이제 `chatDetailPage` 페이지 헤더에 Chat 화면의 리스트에서 클릭한 사람의 이미지와 이름이 뜨는 것을 볼 수 있다.
 
 ![Flutter Simple chat UI ex 03](SimulSc_ex_03.gif){:width="30%" height="30%"}
-
-## Chat 화면 : 리스트에 마지막 메세지 전달
 
 # Chat Detail 화면 : 메세지 입력
 
@@ -289,7 +289,7 @@ class ChatDetailPage extends StatefulWidget {
 
 위의 gif 가장 하단에 보이는 검정색 바탕 화면이 콘솔화면인데, 시뮬레이터에 입력한 값이 제대로 출력되는 것을 볼 수 있다.
 
-이 값을 메세지 로그(바디)에 출력해 주기 위해서는 버튼을 눌렀을 때, 리스트 뷰를 갱신하는 `setState()` 함수를 호출하면 된다!
+이 값을 메세지 로그(바디)에 출력해 주기 위해서는 버튼을 눌렀을 때, 리스트 뷰를 다시 빌드해주는 `setState()` 함수를 호출하면 된다!
 
 ```dart
                   FloatingActionButton(
@@ -297,7 +297,7 @@ class ChatDetailPage extends StatefulWidget {
                       ChatMessage newMsg = ChatMessage(
                           messageContent: msgtextController.text,
                           messageType: "sender"); 
-                      debugPrint('Input text : ${newMsg.messageContent}'); 
+                      //debugPrint('Input text : ${newMsg.messageContent}'); 
                       setState(() {
                         messages.add(newMsg); 
                       }); //추가, 버튼을 누를 때 마다 리스트뷰 갱신
@@ -309,7 +309,7 @@ class ChatDetailPage extends StatefulWidget {
 
 ![Flutter Simple chat UI ex 05](SimulSc_ex_05.gif){:width="30%" height="30%"}
 
-## 자잘한 수정
+## 메세지 입력에 따른 Chat Detail 화면의 디테일한 UI 수정
 
 제대로된 채팅 앱처럼 만들기 위해서는 그 외에도 여러가지 자잘한 작업이 필요한데,
 
@@ -582,7 +582,7 @@ class ChatDetailPage extends StatefulWidget {
                                 ChatMessage newMsg = ChatMessage(
                                     messageContent: msgtextController.text,
                                     messageType: "sender");
-                                debugPrint('Input text : ${newMsg.messageContent}');
+                                //debugPrint('Input text : ${newMsg.messageContent}');
                                 setState(() {
                                     messages.add(newMsg);
                                     msgtextController.clear(); //1. 추가, 버튼을 누른 후 텍스트 필드 클리어
@@ -626,13 +626,17 @@ class ChatDetailPage extends StatefulWidget {
      > #수정 보류중인 오류  
      > 9번과 마찬가지로 맨 처음 개행이 될 때, (처음 한 문자만) 스크롤이 제대로 이동을 안함 
 
-
-
 ***
 
 참고하기 좋은 사이트
 
 - [Flutter 화면 배치에 쓰는 기본 위젯 정리](https://pogon.tistory.com/entry/Flutter-화면-배치에-쓰는-기본-위젯-정리)
+
+포스트를 작성하면서 느낀 것
+- 다트에서는 대체로 위젯이라는 용어를 쓰나본데, 아직 클래스나 객체라는 단어가 익숙해서 혼동해서 쓰게 된다.
+- 자잘한 수정은 한 개 수정할 때마다 코드를 첨부하기가 애매해서 번호를 매겨서 설명만 쭉 작성 후, 마지막에 전체 코드를 첨부, 코드안에 주석으로 몇 번에 해당하는 수정, 추가 사항인지 작성했다.
+- 그 중에서 마지막 10번을 따로 작성한 이유는, 지금까지 썼던 베이스 위젯의 종류를 아예 바꾸는 등 수정한 내용이 많았기 때문이다.
+- 뭐든 그렇겠지만 처음부터 무슨 기능을 구현하고 싶은지 염두에 두고 알맞은 위젯을 쓰는게 가장 효율적일텐데 그게 참 어려운 부분이지...
 
 ***
 # 후기
