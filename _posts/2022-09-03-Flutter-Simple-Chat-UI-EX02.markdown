@@ -208,12 +208,13 @@ class ChatUsers {
 
 
 - String id;   
-  데이터 베이스에 저장을 할 때, key가 될 속성이 필요하기 때문에, 추가해 주었다. `id`속성은 `uuid`플러그인을 이용해 생성자 실행 시에 자동으로 할당되도록 해주었다. (SQL데이터베이스로 말하면 prime key같은 역할을 할 속성, name등 다른 속성으로 식별해 줄 수도 있지만, 이름은 겹칠 수도 있고...name 외의 속성도 딱히 prime key 역할은 못할 듯)
+  데이터 베이스에 저장을 할 때, key가 될 속성이 필요하기 때문에, 추가해 주었다. `id`속성은 `uuid`플러그인을 이용해 생성자 실행 시에 자동으로 할당되도록 해주었다. SQL데이터베이스로 말하면 prime key같은 역할을 할 속성, name등 다른 속성으로 식별해 줄 수도 있지만, 이름은 겹칠 수도 있고...name 외의 속성도 딱히 prime key 역할은 못할 듯   
+  ※ 그렇다고 진짜 hive에서 키로 설정할 속성을 (겹치면 절대 안되는)식별키로 인식하는건 아님 주의! 내가 아직 SQL식 사고에서 못벗어나서 만들어 준 것 뿐...! 진짜로 이렇게 사용하는 건지는 모르겠음  
 - part 'chatUsersModel.g.dart';  
   `part`는 `part of`와 한쌍으로 프로그램을 분할 할 때 사용하는 구문으로, 파일에 선언해주면 (이번의 경우) `chatUsersModel.dart` 와 `chatUsersModel.g.dart` 는 하나의 파일에 정의한 것과 같이 취급된다. `chatUsersModel.g.dart`파일은 TypeAdapter 클래스가 정의된 파일로, 아직 생성해 주지 않았으므로 빌드에러가 날 것이다. (바로 다음 단계에서 생성해 줄 것)   
-  ※ 추후 생성할 `chatUsersModel.g.dart`파일을 확인하면 `part of 'chatUsersModel.dart'` 가 선언되어 있는 것을 확인 할 수 있다.
+  ※ 추후 생성할 `chatUsersModel.g.dart`파일을 확인하면 `part of 'chatUsersModel.dart'` 가 선언되어 있는 것을 확인 할 수 있다.  
 - @HiveType(typeId:`0~255의 숫자`)  
-  Hive가 TypeAdapter 생성시, 각 클래스들을 식별 할 수 있도록 지정해 주는 것이며, 들어갈 수 있는 숫자 범위는 `0~255`이다.
+  Hive가 TypeAdapter 생성시, 각 클래스들을 식별 할 수 있도록 지정해 주는 것이며, 들어갈 수 있는 숫자 범위는 `0~255`이다.  
 - @HiveField(`0~255의 숫자`)  
   Hive가 TypeAdapter 생성시, 각 필드들을 식별 할 수 있도록 지정해 주는 것이며, 들어갈 수 있는 숫자 범위는 `0~255`이다.
 
@@ -733,6 +734,8 @@ class MyApp extends StatelessWidget {
 ```
 {: file="/lib/screen/chatPage.dart" }
 
+※ Dart의 `late`선언은 반드시 값이 필요한 (null이면 안되는, non-nullable) 변수지만, 선언과 동시에 초기화를 하지 않을 때 사용한다. 변수의 초기화를 뒤로 밀어줄 수 있는 것. 
+
 - 등록된 모든 유저를 삭제 : `Clear` 버튼을 눌렀을때 `_uctlr.clearUser();`를 실행
 
 ```dart
@@ -972,7 +975,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
 상태창 UI의 버튼 목록
 - Appbar의 역화살표 아이콘 : `ChatPage`로 돌아가기
 - Appbar의 펜모양 아이콘 : 아직 아무 기능 없음
-- Appbar의 더하기 아이콘 : 배경 이미지을 변경 (다음 소챕터에 자세히 작성)  
+- Appbar의 더하기 아이콘 : 배경 이미지를 변경 (다음 소챕터에 자세히 작성)  
 - 이름 옆의 펜 아이콘 : 이름 수정
 - 상태메세지 옆의 펜 아이콘 : 상태메세지 수정
 - 하단의 메세지 아이콘 : `ChatDetailPage`로 이동
@@ -992,6 +995,29 @@ UI중에 지금까지랑은 크게 다른건 Appbar의 백그라운드를 body�
  ... // 생략
 ```
 {: file="/lib/screen/userDetailPage.dart" }
+
+그런데 위의 코드대로라면 유저의 이름을 수정한 후에 `ChatPage`로 돌아갔을 때 리스트뷰에 갱신내용이 반영이 되어있지 않은 것을 확인 할 수 있을 것이다. 그건`conversationList`에서 `UserDetailPage`로 `Navigator.of(context).push`할 때, 미래의 값을 기다려 줌(`await`)으로써 값이 수정되면 상태를 갱신(`setState`)하는 것으로 해결할 수 있다.
+
+```dart
+                  InkWell(
+                    onTap: () async { //추가, async
+                      await Navigator.of(context).push(MaterialPageRoute( //추가, await
+                        builder: (context) {
+                          return UserDetailPage(
+                            cpuser: widget.user,
+                          );
+                        },
+                      ));
+                      setState(() {}); //추가
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(widget.user.imageURL), 
+                      maxRadius: 30,
+                    ),
+                  ),
+```
+{: file="/lib/widgets/conversationList.dart" }
+
 
 ### 갤러리서 선택한 이미지를 배경 이미지로 설정 
 
@@ -1033,6 +1059,17 @@ class ChatUsers {
 ```html
 flutter packages pub run build_runner build
 ```
+
+그런데 여기서 문제가 발생할 것이다... 왜냐하면, `Hive`는 File Type을 지원하지 않기 떄문이다. 코드를 수정한 후에 `Add new`로 유저를 추가해 주면, 이러한 「너 File의 Typeadapter를 추가하지 않았다. 추가해줘라.」라는 에러를 만나게 될 것이다. 
+
+```error
+[VERBOSE-2:ui_dart_state.cc(198)] Unhandled Exception: HiveError: Cannot write, unknown type: _File. Did you forget to register an adapter?
+```
+그리고 덩달아 나머지 속성들에 대한 저장도 제대로 되지 않는다. (아예 `'user_log'`박스가 제대로 동작하지 않는다)  File의 Typeadapter를 알아서 작성하라는 거냐... 싶지만 인터넷에는 웬만한 찾아보면 있다.  
+
+내가 참고한 글은 [【Flutter】Hiveの対応しているオブジェクト以外も格納できるようにする](https://zenn.dev/kirisimacreate/articles/6badb7d8ee58f8) 라는 글인데, 이 글에서 처럼 `file_apdater.dart`라는 파일을 만들어 주고, 만들어준 파일에 정의한 `FileAdapter`를 `main.dart`에 등록해 주면 된다. 그럼 에러가 없이 깔끔하게 실행되는 것을 확인 할 수 있다.
+
+이제 해결했으니 본론으로 돌아오겠다.
 
 배경 이미지 선택은 갤러리에서 사진을 가져오는 방식을 사용할 것이기 때문에, `/ios/Runner/info.plist`에 카메라, 앨범에 액세스 권한을 추가해주었다.(카메라는 아직 권한만 추가하고 미구현), 권한을 주지 않고 앨범에 접근하려고 하면 앱이 강제종료된다.
 
@@ -1120,13 +1157,12 @@ UI에는 이렇게 `BoxDecoration`위젯을 사용해 주면 된다.
 > 상태메세지 바꿀 때 뜨는 다이얼로그를 이름 바꿀 때 쓰는 다이얼로그와 같이 써서, 타이틀이랑 힌트가 상황에 맞지 않게 뜨는 거 요수정
 
 
+
 ***
 # 다음 포스팅 내용
 
 이제 유저 정보는 데이터 베이스에 저장이 된다! 상태창에서 정상적으로 이름, 상태메세지, 배경이미지를 바꿀 수 있다.  
-하지만, `ChatPage`로 돌아가 보면 리스트뷰에 갱신내용이 반영이 되어있지 않은 것을 확인 할 수 있을 것이다.  
-다음 포스팅에서는 `Navigator.pop`을 했을 때, 유저를 표시하는 리스트뷰(`conversationList`위젯)가 갱신 되도록 해볼 것이다.  
-그리고 이번에 유저 정보를 저장해 준 것처럼 메세지 로그를 저장해 줄 건데, 그 위의 내용이 연관되므로 같이 작성하는 걸로...
+다음엔 유저 정보를 저장해 준 것처럼, 유저별로 메세지 로그를 저장해 주고 마지막에 대화했던 메세지 내용을 `ChatPage`에 표시해 주는 것을 해 볼 것이다.
 
 ***
 

@@ -72,6 +72,7 @@ img_path: /assets/img/2022-08-12-Flutter-Simple-Chat-UI-EX01/
 - [Chat Detail 화면 구현](https://kaesknzxvf.github.io/posts/Flutter-Simple-Chat-UI-02/)
 - 응용 01 (Chat Detail 화면) 화면 간 데이터 전달, 메세지 입력 (현재포스트)
 - [응용 02 데이터 로컬 저장 및 읽기, 쓰기](https://kaesknzxvf.github.io/posts/Flutter-Simple-Chat-UI-EX02/)
+- [응용 03 데이터 로컬 저장 및 읽기,쓰기_메세지로그편](https://kaesknzxvf.github.io/posts/Flutter-Simple-Chat-UI-EX03/)
 
 ***
 # 환경
